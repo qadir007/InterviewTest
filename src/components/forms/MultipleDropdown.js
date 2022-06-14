@@ -2,7 +2,7 @@ import {StyleSheet, View} from 'react-native';
 import {MultiSelect} from 'react-native-element-dropdown';
 import React from 'react';
 
-export default ({items, selected, setSelected}) => {
+export default ({title, items, selected, setSelected}) => {
   return (
     <View style={styles.container}>
       <MultiSelect
@@ -11,11 +11,10 @@ export default ({items, selected, setSelected}) => {
         selectedTextStyle={styles.selectedTextStyle}
         inputSearchStyle={styles.inputSearchStyle}
         iconStyle={styles.iconStyle}
-        search
         data={items}
         labelField="label"
         valueField="value"
-        placeholder="Select item"
+        placeholder={`Select ${title || 'items'}`}
         searchPlaceholder="Search..."
         value={selected}
         onChange={item => {

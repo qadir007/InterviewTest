@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 
-export default ({title, value, setValue, items}) => {
+export default ({title, placeholder, value, setValue, items}) => {
   const [isFocus, setIsFocus] = useState(false);
 
   const renderLabel = () => {
@@ -27,7 +27,7 @@ export default ({title, value, setValue, items}) => {
         maxHeight={300}
         labelField="label"
         valueField="value"
-        placeholder={!isFocus ? 'Select item' : '...'}
+        placeholder={!isFocus ? `${placeholder || 'Select Item'}` : '...'}
         searchPlaceholder="Search..."
         value={value}
         onFocus={() => setIsFocus(true)}

@@ -26,7 +26,6 @@ export default () => {
   const [sortitems, setSortItems] = useState([
     {label: 'name', value: 'name'},
     {label: 'population', value: 'population'},
-    {label: 'residents', value: 'residents'},
   ]);
 
   //   get data from apis function
@@ -72,7 +71,8 @@ export default () => {
   // listen to sort dropdown
   useEffect(() => {
     if (sorted && filtered && selectedTerrain.length > 0) {
-      const filter = filterSingleValueArray(planets, 'climate', filtered);
+      const result = filterMultiValueArray(planets, 'terrain', selectedTerrain);
+      const filter = filterSingleValueArray(result, 'climate', filtered);
       const sort = sortArray(filter, sorted);
       setTempPlanets(sort);
     } else if (sorted && selectedTerrain.length) {
@@ -82,8 +82,7 @@ export default () => {
     } else if (filtered && selectedTerrain.length > 0) {
       const result = filterMultiValueArray(planets, 'terrain', selectedTerrain);
       const filter = filterSingleValueArray(result, 'climate', filtered);
-      const sort = sortArray(filter, sorted);
-      setTempPlanets(sort);
+      setTempPlanets(filter);
     } else if (sorted && filtered) {
       const filter = filterSingleValueArray(planets, 'climate', filtered);
       const sort = sortArray(filter, sorted);
@@ -103,7 +102,7 @@ export default () => {
   const renderItem = ({item}) => {
     return (
       <View style={{padding: 10, borderWidth: 1}}>
-        <Text>showing name : {item.name}</Text>
+        <Text>name : {item.name}</Text>
         <Text>climate : {item?.climate} </Text>
         <Text>terrain : {item.terrain}</Text>
         <Text>population : {item.population}</Text>
@@ -135,6 +134,7 @@ export default () => {
               setValue={setSorted}
               value={sorted}
               title="Sort By"
+              placeholder={'Sort By'}
             />
             <SingleDropdown
               items={climates}
@@ -142,11 +142,13 @@ export default () => {
               setValue={setFiltered}
               value={filtered}
               title="Filter By Climents"
+              placeholder="Filter By Climents"
             />
             <MultipleDropdown
               items={terrain}
               selected={selectedTerrain}
               setSelected={setSelectedTerrain}
+              title="Terrain"
             />
           </>
         )}
